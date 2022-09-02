@@ -2,19 +2,23 @@ const Discord = require('discord.js');//https://discord.com/oauth2/authorize?cli
 
 const cliente = new Discord.Client();
 
-const TOKEN = 'MTAxNDcwMjYwMTI2NDE3MzA3Ng.GPSJuY.a_777BGv_gI9b-mSpJejSJ_zQgi_Uqfp8TCb8U';
+const TOKEN = "token";
 
 cliente.on("ready", () => {
     console.log('on-line');
 });
 
 cliente.on('message', (msg) => {
-    if(msg.content === 'ola'){
-        msg.reply('locura locura locura !!!');
-    }else{
-        msg.channel.send("soi bobo, bum sei responder outras mensagens");
+    if (msg.content === 'join' && msg.member.voice.channel && !msg.author.bot) {
+        msg.member.voice.channel.join().then(connection => {
+          const dispatcher =   connection.play(require("path").join(__dirname,'./risada.mp3'));
+
+          //dispatcher.on('end',()=> {voiceChannel.leave()});
+        });
+
     }
 
+    console.log(msg.content);
 });
 
 cliente.login(TOKEN);
